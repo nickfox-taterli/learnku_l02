@@ -16,4 +16,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'PagesController@root')->name('root');
 
 //Laravel的认证路由可以从vendor/laravel/ui/src/AuthRouteMethods.php找得到!
-Auth::routes();
+Auth::routes(['verify' => true]);
