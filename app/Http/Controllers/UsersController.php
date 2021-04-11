@@ -11,16 +11,27 @@ use App\Handlers\ImageUploadHandler;
 
 class UsersController extends Controller
 {
+    //认证的人才可以编辑自己的描述,其他人只能show方法,但是这个策略不能禁止ID1的人编辑ID2的人的内容.
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['show']]);
+    }
+
     //
     public function show(User $user){
         return view('users.show',compact('user'));
     }
 
     public function edit(User $user){
+        //我滴天,还要第三步,进行验证,创建的Policy才有用,下面的update同理.
+        $this->authorize('update', $user);
+
         return view('users.edit',compact('user'));
     }
 
     public function update(UserRequest $request,ImageUploadHandler $uploader,User $user){
+        $this->authorize('update', $user);
+
         $data = $request->all();
 
         //头像要储存起来的嘛~
