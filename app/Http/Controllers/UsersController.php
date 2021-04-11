@@ -25,7 +25,7 @@ class UsersController extends Controller
 
         //头像要储存起来的嘛~
         if ($request->avatar) {
-            $result = $uploader->save($request->avatar, 'avatars', $user->id);
+            $result = $uploader->save($request->avatar, 'avatars', $user->id, 416);
             //如果上面返回false就是没成功,估计是扩展名不允许.
             if ($result) {
                 $data['avatar'] = $result['path'];
