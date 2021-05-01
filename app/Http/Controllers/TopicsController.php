@@ -16,7 +16,8 @@ class TopicsController extends Controller
 
 	public function index()
 	{
-		$topics = Topic::paginate();
+		//因为user和category要查很多次,然后合并起来就可以节约很多SQL开销,这是N+1问题,解决的这个方法叫预加载.
+		$topics = Topic::with('user','category')->paginate(100);
 		return view('topics.index', compact('topics'));
 	}
 
